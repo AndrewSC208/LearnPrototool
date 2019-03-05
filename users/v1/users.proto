@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package users.v1;
+
+option go_package = "usersv1";
+
+// Hello is a hello.
+message Hello {
+  int64 hello = 1;
+}
+
+// HelloAPI controls Foos and Bars.
+service HelloAPI {
+  // Foo does a foo.
+  rpc Foo(FooRequest) returns (FooResponse);
+  // Bar does a bar.
+  rpc Bar(BarRequest) returns (BarResponse);
+}
+
+message FooRequest {}
+
+message FooResponse {}
+
+message BarRequest {
+  int64 id = 1;
+}
+
+message BarResponse {}
