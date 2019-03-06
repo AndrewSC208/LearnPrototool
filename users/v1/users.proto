@@ -2,27 +2,33 @@ syntax = "proto3";
 
 package users.v1;
 
-option go_package = "usersv1";
-
-// Hello is a hello.
-message Hello {
-  int64 hello = 1;
+service Users {
+  rpc Register(NewUser) returns (RegisterResponse);
+  rpc Save(Node) returns (NodeList);
 }
 
-// HelloAPI controls Foos and Bars.
-service HelloAPI {
-  // Foo does a foo.
-  rpc Foo(FooRequest) returns (FooResponse);
-  // Bar does a bar.
-  rpc Bar(BarRequest) returns (BarResponse);
+message NewUser {
+  string email = 1;
+  string user_name = 2;
+  string password = 3;
 }
 
-message FooRequest {}
-
-message FooResponse {}
-
-message BarRequest {
-  int64 id = 1;
+message RegisterResponse {
+  string id = 1;
 }
 
-message BarResponse {}
+message Item {
+  string foo = 1;
+  string bar = 2;
+}
+
+message Node {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message NodeList {
+  repeated Node nods =1;
+}
+
