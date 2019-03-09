@@ -2,33 +2,19 @@ syntax = "proto3";
 
 package users.v1;
 
+// User service
 service Users {
   rpc Register(NewUser) returns (RegisterResponse);
-  rpc Save(Node) returns (NodeList);
 }
 
+// NewUser request is used to sign up
 message NewUser {
   string email = 1;
   string user_name = 2;
   string password = 3;
 }
 
+// Response to signing up to a new 
 message RegisterResponse {
   string id = 1;
 }
-
-message Item {
-  string foo = 1;
-  string bar = 2;
-}
-
-message Node {
-  string id = 1;
-  string name = 2;
-  string description = 3;
-}
-
-message NodeList {
-  repeated Node nods =1;
-}
-
