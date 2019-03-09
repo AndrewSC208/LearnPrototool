@@ -3,6 +3,9 @@ TEMPLATE_DIR=$(ROOT_DIR)/template
 PACKAGE_JSON_FILE=$(TEMPLATE_DIR)/package.json
 GEN_DIR=$(ROOT_DIR)/gen
 FILES=$(shell find $(GEN_DIR) -type f -name '*.js');
+CONTAINER_NAME=builder
+CONTAINER_TAG=1.0.0
+
 
 ## Make an npm module with docker
 # for each generated js file
@@ -17,10 +20,7 @@ all: protos
 
 .PHONY: protos
 protos:
-	docker run \
-	 --mount type=bind,source=$(ROOT_DIR),target=/work \
-	 uber/prototool:latest \
-	 prototool generate
+	docker run $(CONTAINER_NAME):$(CONTAINER_TAG)
 
 .PHONY: package
 # TODO -> copy in node_modules and make each dir a module
@@ -48,14 +48,14 @@ npm:
 
 .PHONY: env
 env: 
-	docker build -t builder:testv1 .
+	docker build -t $(CONTAINER_NAME):$(CONTAINER_TAG) .
 
 .PHONY: runit
-runit:
+runit: env
 	docker run \
 	-it \
-	builder:testv1 \
-	bash
+	$(CONTAINER_NAME):$(CONTAINER_TAG) \
+	sh
 
 .PHONY: clean
 clean: 

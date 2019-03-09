@@ -17,4 +17,5 @@ message NewUser {
 // Response to signing up to a new 
 message RegisterResponse {
   string id = 1;
+  string token = 2;
 }
