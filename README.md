@@ -16,10 +16,4 @@ prototool generate idl/uber # generate stubs, see the generation directives in t
 prototool grpc idl/uber --address 0.0.0.0:8080 --method foo.ExcitedService/Exclamation --data '{"value":"hello"}' # call the foo.ExcitedService method Exclamation with the given data on 0.0.0.0:8080
 ```
 
-### Compile all protofiles 
-`$ make protos`
-
-### Make npm modules
-`$ make npm`
-
 

@@ -8,3 +8,8 @@ FROM node:11.10.1-alpine
 # copy output from last stage to current stage
 COPY --from=protoc ./ ./
 # build npm modules
+WORKDIR /work
+
+# Test
+RUN chmod +x ./cmd/npm.sh
+RUN ./cmd/npm.sh
