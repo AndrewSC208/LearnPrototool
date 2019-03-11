@@ -13,7 +13,7 @@ do
   # copy module template
   cp -R ${TEMPLATE}/. ${DIR}; \
   # sed PB_MODULE_NAME for ${FILE} in package.json, and webpack.conf.js
-
-  # npm run build
   
+  # npm run build
+
 done
