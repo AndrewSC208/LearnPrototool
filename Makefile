@@ -6,21 +6,8 @@ FILES=$(shell find $(GEN_DIR) -type f -name '*.js');
 CONTAINER_NAME=builder
 CONTAINER_TAG=1.0.0
 
-
-## Make an npm module with docker
-# for each generated js file
-	# copy package.json template
-	# update version
-	# update FILE_NAME with name of js file 
-	# npm install
-	# npx webpack <name of js file>
-
 .PHONY: all
 all: protos
-
-.PHONY: protos
-protos:
-	docker run $(CONTAINER_NAME):$(CONTAINER_TAG)
 
 .PHONY: env
 env: 
@@ -33,28 +20,18 @@ runit: env
 	$(CONTAINER_NAME):$(CONTAINER_TAG) \
 	sh
 
+.PHONY: build
+build: env
+	docker run $(CONTAINER_NAME):$(CONTAINER_TAG)
+
+.PHONY: protos
+protos: env
+	docker run \
+	-it \
+	--mount type=bind,source=${ROOT_DIR},target=/work \
+	uber/prototool:latest \
+	prototool generate
+
 .PHONY: clean
 clean: 
 	rm -rf gen
-
-# Use npm to package each node module
-# .PHONY: package
-# # TODO -> copy in node_modules and make each dir a module
-# package:
-# 	for i in $(shell find $(GEN_DIR) -name *.js -exec dirname {} \;); \
-# 		do \	
-# 			cp $(PACKAGE_JSON_FILE) $$i; \
-# 		done;
-
-
-# Use the jfrog cli to:
-#	* create go modules
-#   * push each module to artifactory
-# .PHONY: jfrog
-# jfrog:
-# 	docker run \
-# 	-it \
-# 	--mount type=bind,source=$(GEN_SOURCE_DIR),target=/usr/src/app \
-# 	docker.bintray.io/jfrog/jfrog-cli-go:latest \
-# 	sh
-

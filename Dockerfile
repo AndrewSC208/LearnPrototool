@@ -13,7 +13,10 @@ WORKDIR /work/template
 RUN npm install
 # chagne back to root
 WORKDIR /work
+#####
+# Only doing local builds right now=
+#####
 # chmod the scirpt so it can be run in the docker container
-RUN chmod +x ./cmd/npm.sh
+# RUN chmod +x ./cmd/npm.sh
 # run the script
-RUN ./cmd/npm.sh
+# RUN ./cmd/npm.sh
